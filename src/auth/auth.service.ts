@@ -3,22 +3,32 @@ import { UserService } from 'src/user/user.service';
 import { LoginDto } from './dtos/login.dto';
 import { RegisterDto } from './dtos/register.dto';
 import { MessagesHelper } from './helpers/messages.helper';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
   private logger = new Logger(AuthService.name);
 
   constructor(
-    private readonly userService: UserService
+    private readonly userService: UserService,
+    private readonly jwtService: JwtService
   ) { }
 
-  login(dto: LoginDto) {
+  async login(dto: LoginDto) {
     this.logger.debug('login - started');
-    if (dto.login !== 'teste@teste.com' || dto.password !== 'teste@123') {
+    
+    const user = await this.userService.getUserByLoginPassword(dto.login, dto.password);
+    if(user == null){
       throw new BadRequestException(MessagesHelper.AUTH_PASSWORD_OR_EMAIL_NOT_FOUND);
     }
 
-    return dto;
+    const payload = { email: user.email, sub: user._id };
+    this.logger.debug(process.env.JWT_SECRET_KEY);
+    return {
+      email:user.email,
+      name:user.name,
+      token: this.jwtService.sign(payload, {secret: process.env.JWT_SECRET_KEY}),
+    };
   }
 
   async register(dto: RegisterDto) {
@@ -27,6 +37,8 @@ export class AuthService {
       this.logger.debug(`register - same email found for: ${dto.email}`);
       throw new BadRequestException(MessagesHelper.REGISTER_EMAIL_FOUND);
     }
+    
+    console.log(dto)
     
     const user = await this.userService.create(dto);
 

@@ -3,8 +3,10 @@ import {
     IsNotEmpty,
     MinLength,
     MaxLength,
-    Matches
+    Matches,
+    IsString
 } from 'class-validator';
+import { isString } from 'util';
 import { MessagesHelper } from '../helpers/messages.helper';
 
 
@@ -24,5 +26,6 @@ export class RegisterDto {
     @MinLength(2, { message: MessagesHelper.REGISTER_NAME_NOT_FOUND })
     name: string;
 
+    @IsString()
     avatar: string;
 }
