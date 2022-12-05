@@ -1,5 +1,6 @@
-import { Controller, Get, Request } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Put, Request } from '@nestjs/common';
 import { GetUserResponseDto } from './dtos/getuser.response.dto';
+import { UpdateUserDto } from './dtos/updateuser.dto';
 import { UserService } from './user.service';
 
 @Controller("user")
@@ -17,6 +18,13 @@ export class UserController {
             email: result.email, 
             avatar: result.avatar, 
             id: result._id.toString()
-        } as GetUserResponseDto;
+        };
+    }
+
+    @Put()
+    @HttpCode(HttpStatus.OK)
+    async updateUser(@Request() req, @Body() dto: UpdateUserDto){
+        const {userId} = req?.user;
+        await this.service.updateUser(userId, dto);
     }
 }
