@@ -38,8 +38,6 @@ export class AuthService {
       throw new BadRequestException(MessagesHelper.REGISTER_EMAIL_FOUND);
     }
     
-    console.log(dto)
-    
     const user = await this.userService.create(dto);
 
     return user;
