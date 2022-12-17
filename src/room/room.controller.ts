@@ -1,5 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Put, Request } from '@nestjs/common';
-import { UpdatePositionDto } from './dtos/updateposition.dto';
+import { Controller, Get, HttpCode, HttpStatus, Param, } from '@nestjs/common';
 import { RoomService } from './room.service';
 
 @Controller('room')
