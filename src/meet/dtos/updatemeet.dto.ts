@@ -24,12 +24,12 @@ export class UpdateMeetObject {
 
     @IsNumber({}, { message: MeetMessagesHelper.UPDATE_XY_VALIDATION })
     @Min(0, { message: MeetMessagesHelper.UPDATE_XY_VALIDATION })
-    @Max(8, { message: MeetMessagesHelper.UPDATE_XY_VALIDATION })
+    @Max(7, { message: MeetMessagesHelper.UPDATE_XY_VALIDATION })
     x: number;
 
     @IsNumber({}, { message: MeetMessagesHelper.UPDATE_XY_VALIDATION })
     @Min(0, { message: MeetMessagesHelper.UPDATE_XY_VALIDATION })
-    @Max(8, { message: MeetMessagesHelper.UPDATE_XY_VALIDATION })
+    @Max(7, { message: MeetMessagesHelper.UPDATE_XY_VALIDATION })
     y: number;
 
     @IsNumber({}, { message: MeetMessagesHelper.UPDATE_ZINDEX_VALIDATION })

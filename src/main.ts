@@ -15,6 +15,8 @@ async function bootstrap() {
       forbidNonWhitelisted: false,
     }),
   );
+
+  app.enableCors();
   
   app.use(helmet());
   app.setGlobalPrefix('api');
